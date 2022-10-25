@@ -3,7 +3,7 @@ from accounts.models import User
 
 from accounts.serializer import LoginUserSerializer, UserSerializer
 
-from common.common_view import GetCommonView, GetPostView, PostCommonView
+from _utils.common_view import GetCommonView, GetPostView, PostCommonView
 
 
 from rest_framework.authentication import TokenAuthentication
@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate
 
 
 class UserView(GetPostView):
-    queryset = User.objects
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
@@ -22,7 +22,6 @@ class AccountDetailView(GetPostView):
 
     def get_queryset(self):
         lista_max = self.kwargs["num"]
-
         return self.queryset.order_by("-date_joined")[0:lista_max]
 
 
