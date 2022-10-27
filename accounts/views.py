@@ -1,10 +1,12 @@
 from rest_framework import views
+from _project.pagination import CustomPageNumberPagination
 from accounts.models import User
+from accounts.permissions import Is_Account_Owner, Is_Admin
 
-from accounts.serializer import LoginUserSerializer, UserSerializer
+from accounts.serializer import LoginUserSerializer, UserAdminSerializer, UserSerializer
 
 from _utils.common_view import GetCommonView, GetPostView, PostCommonView
-
+from rest_framework import generics
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -16,13 +18,30 @@ class UserView(GetPostView):
     serializer_class = UserSerializer
 
 
-class AccountDetailView(GetPostView):
+class AccountNewestView(GetPostView):
     queryset = User.objects
     serializer_class = UserSerializer
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         lista_max = self.kwargs["num"]
         return self.queryset.order_by("-date_joined")[0:lista_max]
+
+
+class AccountDetailView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [Is_Account_Owner]
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class AdminDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [Is_Admin]
+    authentication_classes = [TokenAuthentication]
+
+    queryset = User.objects.all()
+    serializer_class = UserAdminSerializer
 
 
 class LoginView(views.APIView):
