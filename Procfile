@@ -1,0 +1,1 @@
+web: guincorn _project --log-level debug

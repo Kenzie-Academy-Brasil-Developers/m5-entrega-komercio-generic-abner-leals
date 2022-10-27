@@ -57,7 +57,6 @@ class UserAdminSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "username",
-            "password",
             "first_name",
             "last_name",
             "is_seller",
@@ -65,5 +64,10 @@ class UserAdminSerializer(serializers.ModelSerializer):
             "is_superuser",
             "is_active",
         ]
-        read_only_fields = ["date_joined", "is_superuser"]
-        extra_kwargs = {"password": {"write_only": True}}
+        read_only_fields = [
+            "date_joined",
+            "is_superuser",
+            "username",
+            "first_name",
+            "last_name",
+        ]

@@ -1,0 +1,859 @@
+openapi: 3.0.3
+info:
+  title: Komercial K
+  version: 1.0.0
+  description: API desenvolvida para o cadastro de produtos e suas visualizações,
+    não tenho foco em vendas
+paths:
+  /api/accounts/:
+    get:
+      operationId: accounts_list
+      tags:
+      - accounts
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+    post:
+      operationId: accounts_create
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/accounts/{id}/:
+    get:
+      operationId: accounts_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - accounts
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: accounts_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: accounts_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: accounts_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - accounts
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/accounts/{id}/management/:
+    get:
+      operationId: accounts_management_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - accounts
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAdmin'
+          description: ''
+    put:
+      operationId: accounts_management_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAdmin'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserAdmin'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAdmin'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAdmin'
+          description: ''
+    patch:
+      operationId: accounts_management_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserAdmin'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserAdmin'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserAdmin'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAdmin'
+          description: ''
+    delete:
+      operationId: accounts_management_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - accounts
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/accounts/newest/{num}/:
+    get:
+      operationId: accounts_newest_list
+      parameters:
+      - in: path
+        name: num
+        schema:
+          type: integer
+        required: true
+      - name: pagina
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: total_resultados
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - accounts
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserList'
+          description: ''
+    post:
+      operationId: accounts_newest_create
+      parameters:
+      - in: path
+        name: num
+        schema:
+          type: integer
+        required: true
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/login/:
+    post:
+      operationId: login_create
+      tags:
+      - login
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /api/products/:
+    get:
+      operationId: products_list
+      parameters:
+      - name: pagina
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: total_resultados
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - products
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductList'
+          description: ''
+    post:
+      operationId: products_create
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductDetail'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+          description: ''
+  /api/products/{id}/:
+    get:
+      operationId: products_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this product.
+        required: true
+      tags:
+      - products
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+          description: ''
+    put:
+      operationId: products_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this product.
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductDetail'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+          description: ''
+    patch:
+      operationId: products_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this product.
+        required: true
+      tags:
+      - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductDetail'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+          description: ''
+    delete:
+      operationId: products_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this product.
+        required: true
+      tags:
+      - products
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
+    PaginatedProductList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?pagina=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?pagina=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    PaginatedUserList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?pagina=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?pagina=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PatchedProductDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/UserSeller'
+          readOnly: true
+        description:
+          type: string
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        is_active:
+          type: boolean
+          default: true
+    PatchedUser:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        is_seller:
+          type: boolean
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        is_superuser:
+          type: boolean
+          readOnly: true
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        is_active:
+          type: boolean
+          readOnly: true
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+    PatchedUserAdmin:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        first_name:
+          type: string
+          readOnly: true
+        last_name:
+          type: string
+          readOnly: true
+        is_seller:
+          type: boolean
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        is_superuser:
+          type: boolean
+          readOnly: true
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+    Product:
+      type: object
+      properties:
+        description:
+          type: string
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        is_active:
+          type: boolean
+        seller:
+          type: string
+          format: uuid
+      required:
+      - description
+      - price
+      - quantity
+      - seller
+    ProductDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/UserSeller'
+          readOnly: true
+        description:
+          type: string
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        is_active:
+          type: boolean
+          default: true
+      required:
+      - description
+      - id
+      - price
+      - quantity
+      - seller
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        is_seller:
+          type: boolean
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        is_superuser:
+          type: boolean
+          readOnly: true
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        is_active:
+          type: boolean
+          readOnly: true
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+      required:
+      - date_joined
+      - is_active
+      - is_seller
+      - is_superuser
+      - password
+      - username
+    UserAdmin:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        first_name:
+          type: string
+          readOnly: true
+        last_name:
+          type: string
+          readOnly: true
+        is_seller:
+          type: boolean
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        is_superuser:
+          type: boolean
+          readOnly: true
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+      required:
+      - date_joined
+      - first_name
+      - id
+      - is_seller
+      - is_superuser
+      - last_name
+      - username
+    UserSeller:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        is_superuser:
+          type: boolean
+          readOnly: true
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        is_seller:
+          type: boolean
+      required:
+      - date_joined
+      - id
+      - is_seller
+      - is_superuser
+      - password
+      - username
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

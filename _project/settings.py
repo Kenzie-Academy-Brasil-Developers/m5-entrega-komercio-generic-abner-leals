@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -29,7 +30,7 @@ SECRET_KEY = os.getenv("SECRETY_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["deploy-komerce.herokuapp.com", "localhost"]
 
 # Application definition
 
@@ -45,6 +46,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
+    "drf_spectacular",
 ]
 
 MY_APPS = [
@@ -103,6 +105,12 @@ DATABASES = {
     },
 }
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    db = dj_database_url.config(default=DATABASE_URL)
+    DATABASES["default"].update(db)
+    DEBUG = False
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -146,3 +154,15 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Komercial K",
+    "DESCRIPTION": "API desenvolvida para o cadastro de produtos e suas visualizações, não tenho foco em vendas",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+}

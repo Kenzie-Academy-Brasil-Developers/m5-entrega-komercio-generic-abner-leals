@@ -1,0 +1,95 @@
+[
+  {
+    "model": "accounts.user",
+    "pk": "2353aa7c-c77c-4bf1-8ab8-0360724a6831",
+    "fields": {
+      "password": "pbkdf2_sha256$390000$IVZu12Hhewjg3tZrTgvHQr$no8SresHJBTFORMhkSTGMZqHNXdBQR8o79cSqdKU5zY=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "alexia",
+      "first_name": "alexia",
+      "last_name": "alves",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-10-26T15:58:05.916Z",
+      "is_seller": true,
+      "updated_at": "2022-10-26T15:58:06.390Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "4b0f93fe-2d10-4538-8a30-c461fe7f16cc",
+    "fields": {
+      "password": "pbkdf2_sha256$390000$xhOWPs97Ck9vISLrCjGnHq$7J7Xf5bHlFIERUFumDfILvdKlVncyKNxBI+3P0ctJ6E=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "haryson",
+      "first_name": "alexia",
+      "last_name": "alves",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-10-26T16:00:26.643Z",
+      "is_seller": false,
+      "updated_at": "2022-10-27T11:10:33.686Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "9aab1a9f-e771-4bbd-a0fb-310269acad5e",
+    "fields": {
+      "password": "pbkdf2_sha256$390000$xhOWPs97Ck9vISLrCjGnHq$7J7Xf5bHlFIERUFumDfILvdKlVncyKNxBI+3P0ctJ6E=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "alex",
+      "first_name": "alexandre",
+      "last_name": "alves",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2022-10-26T23:31:57.265Z",
+      "is_seller": true,
+      "updated_at": "2022-10-27T10:58:15.206Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": "63881bfb-02a0-45a8-95b6-bfa04da36fa5",
+    "fields": {
+      "description": "Smartband 30",
+      "price": "100.99",
+      "quantity": 15,
+      "is_active": true,
+      "seller": "2353aa7c-c77c-4bf1-8ab8-0360724a6831"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": "92d55dc3-7890-4503-a0e2-f396668df893",
+    "fields": {
+      "description": "Smartband",
+      "price": "100.99",
+      "quantity": 15,
+      "is_active": true,
+      "seller": "2353aa7c-c77c-4bf1-8ab8-0360724a6831"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": "e00b047b-3009-4e14-bcac-04414a4c0575",
+    "fields": {
+      "description": "Smartband 5505",
+      "price": "100.99",
+      "quantity": 15,
+      "is_active": true,
+      "seller": "2353aa7c-c77c-4bf1-8ab8-0360724a6831"
+    }
+  }
+]

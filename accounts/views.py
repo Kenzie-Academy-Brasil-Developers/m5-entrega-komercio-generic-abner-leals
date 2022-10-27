@@ -49,7 +49,10 @@ class LoginView(views.APIView):
         serializer = LoginUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = authenticate(**serializer.validated_data)
+        username = serializer.validated_data["username"]
+        password = serializer.validated_data["password"]
+
+        user = authenticate(username=username, password=password)
 
         if not user:
             return views.Response(
